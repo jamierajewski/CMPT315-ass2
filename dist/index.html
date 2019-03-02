@@ -1,39 +1,19 @@
+<!-- Assignment #2 - CMPT315 - Jamie Rajewski - 3020090 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-      <title>Presentation Feedback System</title>
-      <link rel="stylesheet" href="style.css">
+        <title>Presentation Feedback System</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-      
-      <div class="top">
-        <p>
-          This is the feedback system (**This page is currently based off of the w3schools example**)
-        </p>
-      </div>
-      <div class="container">
-        <form>
-      
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" name="firstname" placeholder="Your name..">
-      
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-      
-          <label for="country">Country</label>
-          <select id="country" name="country">
-            <option value="australia">Australia</option>
-            <option value="canada">Canada</option>
-            <option value="usa">USA</option>
-          </select>
-      
-          <label for="subject">Subject</label>
-          <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-      
-          <input type="submit" value="Submit">
-      
-        </form>
-      </div> 
+        <div class="page-content">
+            <label for="login-textbox">Please Enter You Login ID</label>
+            <br>
+            <input type="text" id="login-textbox" name="loginID" placeholder="Login ID">
+
+            <input type="button" id="login-submit" value="Submit">
+        </div>
     </body>
     <script src="index.js"></script>
 </html>
