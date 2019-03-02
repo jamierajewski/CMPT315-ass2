@@ -5,15 +5,33 @@
         <title>Presentation Feedback System</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="style.css">
+        <script id="presenter-list-template" type="text/x-dot-template">
+            <div class="presenter-list">
+                <table id="presenter-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Presentation Title</th>
+                    </tr>
+                    {{~it.people :value:index}}
+                    <tr>
+                        <td><a href="index.html" style="display:block;">{{=value.firstName}} {{=value.lastName}}</a></td>
+                        <td>{{=value.presentationTitle.String}}</td>
+                    </tr>
+                    {{~}}
+                </table>
+            </div>
+        </script>
     </head>
     <body>
-        <div class="page-content">
+        <div class="main-page"></div>
+        <div class="login-page">
             <label for="login-textbox">Please Enter You Login ID</label>
             <br>
             <input type="text" id="login-textbox" name="loginID" placeholder="Login ID">
 
             <input type="button" id="login-submit" value="Submit">
         </div>
+        <script src="index.js"></script>
+        <script src="doT.js"></script>
     </body>
-    <script src="index.js"></script>
 </html>

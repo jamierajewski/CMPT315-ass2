@@ -5,6 +5,18 @@ https://www.w3schools.com/howto/howto_css_contact_form.asp
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
 #login-textbox {
   width: 60%;
   padding: 12px;
@@ -26,7 +38,7 @@ input[type=button]:hover {
   background-color: rgb(45, 169, 201);
 }
 
-.page-content {
+.login-page {
   display:flex;
   justify-content:center;
   align-items:center;
