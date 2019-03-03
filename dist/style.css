@@ -43,3 +43,9 @@ input[type=button]:hover {
   justify-content:center;
   align-items:center;
 }
+
+a {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
+}
