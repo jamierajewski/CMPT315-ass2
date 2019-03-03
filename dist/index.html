@@ -1,4 +1,9 @@
 <!-- Assignment #2 - CMPT315 - Jamie Rajewski - 3020090 -->
+<!--
+    References:
+    How to make a table cell a link
+    https://stackoverflow.com/questions/10070232/how-to-make-a-cell-of-table-hyperlink
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,11 +19,38 @@
                     </tr>
                     {{~it.people :value:index}}
                     <tr>
-                        <td><a href="index.html" style="display:block;">{{=value.firstName}} {{=value.lastName}}</a></td>
+                        <td><a onclick="clickPresenter({{=value.personId}})">
+                            {{=value.firstName}} {{=value.lastName}}</a></td>
                         <td>{{=value.presentationTitle.String}}</td>
                     </tr>
                     {{~}}
                 </table>
+            </div>
+        </script>
+        <script id="presenter-form-template" type="text/x-dot-template">
+            <div class="presenter-form">
+                <form>
+                    {{~it.questions :value:index}}
+                    <label>
+                        <br>
+                        {{=value.questionText}}
+                        <br>
+                        {{? value.questionType == "mc"}}
+                        <input type="radio" name="q{{=value.questionId}}" value=5>Strongly Agree<br>
+                        <input type="radio" name="q{{=value.questionId}}" value=4>Agree<br>
+                        <input type="radio" name="q{{=value.questionId}}" value=3>Neutral<br>
+                        <input type="radio" name="q{{=value.questionId}}" value=2>Disagree<br>
+                        <input type="radio" name="q{{=value.questionId}}" value=1>Strongly Disagree<br>
+                        <input type="radio" name="q{{=value.questionId}}" value=0>N/A<br>
+                        {{??}}
+                        <input type="text" name="q{{=value.questionId}}"><br>
+                        {{?}}
+                    </label>
+                    <br>
+                    {{~}}
+                    <br>
+                    <input type="button" id="form-submit" value="Submit">
+                </form>
             </div>
         </script>
     </head>

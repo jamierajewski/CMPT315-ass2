@@ -22,6 +22,8 @@ type Database struct {
 type PersonWrapper struct {
 	People *[]Person `json:"people,omitempty" xml:"people,omitempty"`
 	Person *Person   `json:"person,omitempty" xml:"person,omitempty"`
+	// Only used when getting the form data back for a presenter from this user
+	UserID *int `json:"userID,omitempty" xml:"userID,omitempty"`
 }
 
 type QuestionWrapper struct {

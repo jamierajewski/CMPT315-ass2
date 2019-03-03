@@ -19,6 +19,37 @@ function loadPresentationList(respText:string){
     target.innerHTML = templFunc(JSON.parse(respText));
 }
 
+// Used the Promise.all() feature to process multiple requests
+// Source:
+// https://stackoverflow.com/questions/31710768/how-can-i-fetch-an-array-of-urls-with-promise-all
+function clickPresenter(presenterID:number){
+    let urls = ["http://localhost:8080/api/v1/people/presenters/"+presenterID,
+                "http://localhost:8080/api/v1/questions/",
+                "http://localhost:8080/api/v1/answers/"+presenterID]
+    Promise.all(urls.map(u => fetch(u, {
+        headers: {"Authorization": "Bearer " + loginID,}
+    })))
+    .then(responses => 
+        Promise.all(responses.map(res => res.text())))
+    .then(resp => {
+        
+        // Get the template stored in the HTML
+        let templ = <HTMLElement>document.querySelector("#presenter-form-template");
+
+        // Get the target element from the DOM
+        let target = <HTMLElement>document.querySelector(".main-page");
+
+        // Render the template and copy the result into the DOM
+        let templFunc = doT.template(templ.innerHTML);
+        target.innerHTML = templFunc(JSON.parse(resp[1]));
+
+        // Now that the questions are in place, add the remaining elements
+        // with queryselect
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
 let clickLoginSubmit = (evt: Event): void => {
 
     let submitText = <HTMLInputElement>document.querySelector("#login-textbox");
@@ -34,6 +65,7 @@ let clickLoginSubmit = (evt: Event): void => {
         if (xhr.status == 200){
             // Success; load template for next page and render it with the content 
             //received from this request
+            loginID = token;
             loadPresentationList(xhr.responseText);
         }
         else {
@@ -49,5 +81,9 @@ let attachLoginListener = (): void => {
 
 // This always starts as the login page
 window.onload = (): void => {
+    // Clear login field
+    let submitText = <HTMLInputElement>document.querySelector("#login-textbox");
+    submitText.value = "";
+
     attachLoginListener();
 }

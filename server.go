@@ -73,6 +73,9 @@ func (h *Handler) handleGetPresenter(w http.ResponseWriter, r *http.Request) {
 			Details: "Could not find the presenter in the database"})
 		return
 	}
+	// Attach the reviewer's user ID
+	userID := r.Context().Value(keyString("PersonId")).(int)
+	presenter.UserID = &userID
 
 	encoder.Encode(presenter)
 }
