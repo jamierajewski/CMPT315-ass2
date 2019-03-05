@@ -1,5 +1,9 @@
 // Assignment #2 - CMPT315 - Jamie Rajewski - 3020090
 
+// TODO
+// - Fix it so that you CANT review yourself
+// - Fix the out of range error in server.go line 498
+
 let loginID = "";
 
 function loadPresentationList(respText:string){
@@ -43,8 +47,13 @@ function clickPresenter(presenterID:number){
         let templFunc = doT.template(templ.innerHTML);
         target.innerHTML = templFunc(JSON.parse(resp[1]));
 
-        // Now that the questions are in place, add the remaining elements
-        // with queryselect
+        // Now render the header with presenter info
+        templ = <HTMLElement>document.querySelector("#presenter-header-template");
+        target = <HTMLElement>document.querySelector(".presenter-header");
+
+        templFunc = doT.template(templ.innerHTML);
+        target.innerHTML = templFunc(JSON.parse(resp[0]));
+
     }).catch((err) => {
         console.log(err);
     });

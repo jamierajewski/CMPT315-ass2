@@ -13,6 +13,8 @@
 
 *.so
 
+*.code-workspace
+
 # Packages #
 ############
 *.7z

@@ -29,6 +29,7 @@
         </script>
         <script id="presenter-form-template" type="text/x-dot-template">
             <div class="presenter-form">
+
                 <form>
                     {{~it.questions :value:index}}
                     <label>
@@ -53,16 +54,29 @@
                 </form>
             </div>
         </script>
+        <script id="presenter-header-template" type="text/x-dot-template">
+            <hr>
+            <div class="presenter-header">
+                    <p>{{=it.person.firstName}}&nbsp;{{=it.person.lastName}}
+                        &nbsp;&nbsp;{{=it.person.presentationTitle.String}}
+                        &nbsp;&nbsp;{{=it.person.dateTime.Time}}</p>
+            </div>
+            <hr>
+        </script>
     </head>
     <body>
+        <div class="presenter-header"></div>
         <div class="main-page"></div>
-        <div class="login-page">
-            <label for="login-textbox">Please Enter You Login ID</label>
-            <br>
-            <input type="text" id="login-textbox" name="loginID" placeholder="Login ID">
-
-            <input type="button" id="login-submit" value="Submit">
+        <div class="parent-login"> &nbsp;
+            <div class="login-page">
+                <label for="login-textbox">Please Enter Your Login ID</label>
+                <br><br>
+                <input type="text" id="login-textbox" name="loginID" placeholder="Login ID">
+    
+                <input type="button" id="login-submit" value="Submit">
+            </div>
         </div>
+
         <script src="index.js"></script>
         <script src="doT.js"></script>
     </body>

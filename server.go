@@ -495,6 +495,8 @@ func (h *Handler) authenticateMw(next http.Handler) http.Handler {
 
 		authHeader := r.Header.Get("Authorization")
 		if authHeader != "" {
+			//***FIX THE LINE BELOW TO NOT GO OUT OF RANGE***//
+			// Using error handling
 			token := strings.Split(authHeader, " ")[1]
 			if len(token) > 0 {
 				_, err := h.Authenticate(token)

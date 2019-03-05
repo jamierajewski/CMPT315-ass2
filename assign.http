@@ -4,7 +4,6 @@
 
 # TODO (for assignment 2):
 # - Add logging (I ran out of time since I figured error-handling was more important)
-# - Utilize subrouters
 
 # IMPLEMENTED FEATURES:
 # - Extensive error-handling with additional details
@@ -14,6 +13,7 @@
 #       responses; can't review yourself)
 # - Multiple choice option validation
 # - Wrapper structs to wrap returned objects
+# - Subrouters with middleware attached to specific subrouters
 
 # PURPOSE
 # USAGE
