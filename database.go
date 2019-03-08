@@ -197,25 +197,31 @@ func (db *Database) PostResponse(response Answer) error {
 }
 
 // UpdateResponse changes a response for a specific question
-func (db *Database) UpdateResponse(newAnswerText string, answerId int) (AnswerWrapper, error) {
+func (db *Database) UpdateResponse(response Answer) (AnswerWrapper, error) {
 	q := `UPDATE answers
 			SET answer_text = $1
-			WHERE answer_id = $2`
+			WHERE person_id = $2
+			AND presenter_id = $3
+			AND question_id = $4`
 
-	if _, err := db.Exec(q, newAnswerText, answerId); err != nil {
+	if _, err := db.Exec(q, response.AnswerText, response.PersonId,
+		response.PresenterId, response.QuestionId); err != nil {
 		return AnswerWrapper{}, err
 	}
 
 	// Now verify that the record was updated by pulling the new version from the db and return
 	q = `SELECT * FROM answers
-		WHERE answer_id = $1`
-	response := Answer{}
+			WHERE person_id = $1
+			AND presenter_id = $2
+			AND question_id = $3`
+	newResponse := Answer{}
 
-	if err := db.Get(&response, q, answerId); err != nil {
+	if err := db.Get(&newResponse, q, response.PersonId,
+		response.PresenterId, response.QuestionId); err != nil {
 		return AnswerWrapper{}, err
 	}
 
-	return AnswerWrapper{Answer: &response}, nil
+	return AnswerWrapper{Answer: &newResponse}, nil
 }
 
 // DeleteResponse deletes the indicated response

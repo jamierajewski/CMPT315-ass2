@@ -5,6 +5,9 @@
 # TODO (for assignment 2):
 # - Add logging (I ran out of time since I figured error-handling was more important)
 
+# ---NOTE--- #
+# DELETE ALL HTTP/1.1 FROM EACH REQUEST WHEN SUBMITTING
+
 # IMPLEMENTED FEATURES:
 # - Extensive error-handling with additional details
 # - Authentication middleware
@@ -210,49 +213,73 @@ Content-Type: application/json
 
 ###
 
-# Update the response for a specific question.
-# PUT /api/v1/answers/[ANSWER_ID]
-# Returns the updated response for verification
-# Required headers: Authorization
+# Get responses for the given presenter and question
+# GET /api/v1/answers/[PRESENTER_ID]
+# Returns 200 OK on success.
+# Required headers: Authorization, Content-Type (must be JSON)
 # Optional headers: Accept (defaults to JSON if not defined)
-# Required body parameters: answertext, questionid
-PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
-Accept: application/json
+# Required body parameters: None
+GET http://localhost:8080/api/v1/answers/1 HTTP/1.1
 Authorization: Bearer LchajfPu
 Content-Type: application/json
-
-{"answertext": "1", "questionid": 1}
+Accept: application/json
 
 ###
 
-# Same as above, but no answertext parameter which shouldn't work.
-PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
-Accept: application/json
+# Update a response for the given presenter and question contained
+# in the body of the request.
+# PUT /api/v1/answers/
+# Returns the updated response for verification.
+# Required headers: Authorization, Content-Type (must be JSON)
+# Optional headers: Accept (defaults to JSON if not defined)
+# Required body parameters: presenterid, questionid, answertext
+PUT http://localhost:8080/api/v1/answers/ HTTP/1.1
 Authorization: Bearer LchajfPu
 Content-Type: application/json
+Accept: application/json
 
-{"questionid": 1}
+{"presenterid": 1, "questionid": 1, "answertext": "3"}
 
 ###
 
-# Same as above, but no questionid parameter which shouldn't work.
-PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
-Accept: application/json
+# Same as above but trying an invalid MC response
+PUT http://localhost:8080/api/v1/answers/ HTTP/1.1
 Authorization: Bearer LchajfPu
 Content-Type: application/json
+Accept: application/json
 
-{"answertext": "1"}
+{"presenterid": 1, "questionid": 1, "answertext": "JAMIE"}
 
 ###
 
-# Same as above, but trying to update an invalid response which shouldn't
-# be allowed.
-PUT http://localhost:8080/api/v1/answers/100 HTTP/1.1
-Accept: application/json
-Authorization: Bearer LchajfPu
-Content-Type: application/json
+# # Same as above, but no answertext parameter which shouldn't work.
+# PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
+# Accept: application/json
+# Authorization: Bearer LchajfPu
+# Content-Type: application/json
 
-{"answertext": "1", "questionid": 1}
+# {"questionid": 1}
+
+# ###
+
+# # Same as above, but no questionid parameter which shouldn't work.
+# PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
+# Accept: application/json
+# Authorization: Bearer LchajfPu
+# Content-Type: application/json
+
+# {"answertext": "1"}
+
+# ###
+
+# # Same as above, but trying to update an invalid response which shouldn't
+# # be allowed.
+# PUT http://localhost:8080/api/v1/answers/100 HTTP/1.1
+# Accept: application/json
+# Authorization: Bearer LchajfPu
+# Content-Type: application/json
+
+# {"answertext": "1", "questionid": 1}
 
 ###
 

@@ -122,7 +122,7 @@ VALUES
     ('3'),
     ('4'),
     ('5'),
-    ('N/A');
+    ('0');
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

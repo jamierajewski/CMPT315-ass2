@@ -4,6 +4,14 @@
     How to make a table cell a link
     https://stackoverflow.com/questions/10070232/how-to-make-a-cell-of-table-hyperlink
 -->
+
+<!-- #9fe2bf - sea foam -->
+<!-- #b9b9af - heather grey -->
+<!-- #b36e4b - brown -->
+<!-- #a1745d (alt brown) -->
+
+<!-- Radiogroup (look at selectedItem()) -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,29 +37,35 @@
         </script>
         <script id="presenter-form-template" type="text/x-dot-template">
             <div class="presenter-form">
-
-                <form>
-                    {{~it.questions :value:index}}
-                    <label>
-                        <br>
-                        {{=value.questionText}}
-                        <br>
-                        {{? value.questionType == "mc"}}
-                        <input type="radio" name="q{{=value.questionId}}" value=5>Strongly Agree<br>
-                        <input type="radio" name="q{{=value.questionId}}" value=4>Agree<br>
-                        <input type="radio" name="q{{=value.questionId}}" value=3>Neutral<br>
-                        <input type="radio" name="q{{=value.questionId}}" value=2>Disagree<br>
-                        <input type="radio" name="q{{=value.questionId}}" value=1>Strongly Disagree<br>
-                        <input type="radio" name="q{{=value.questionId}}" value=0>N/A<br>
-                        {{??}}
-                        <input type="text" name="q{{=value.questionId}}"><br>
-                        {{?}}
-                    </label>
+                {{~it.questions :value:index}}
+                <label>
                     <br>
-                    {{~}}
+                    {{=value.questionText}}
                     <br>
-                    <input type="button" id="form-submit" value="Submit">
-                </form>
+                    {{? value.questionType == "mc"}}
+                    <input type="radio" name="q{{=value.questionId}}" 
+                    onclick=verifyResponse({{=value.questionId}},"5") value=5>Strongly Agree<br>
+                    <input type="radio" name="q{{=value.questionId}}" 
+                    onclick=verifyResponse({{=value.questionId}},"4") value=4>Agree<br>
+                    <input type="radio" name="q{{=value.questionId}}" 
+                    onclick=verifyResponse({{=value.questionId}},"3") value=3>Neutral<br>
+                    <input type="radio" name="q{{=value.questionId}}" 
+                    onclick=verifyResponse({{=value.questionId}},"2") value=2>Disagree<br>
+                    <input type="radio" name="q{{=value.questionId}}" 
+                    onclick=verifyResponse({{=value.questionId}},"1") value=1>Strongly Disagree<br>
+                    <input type="radio" name="q{{=value.questionId}}" 
+                    onclick=verifyResponse({{=value.questionId}},"0") value=0>N/A<br>
+                    {{??}}
+                    <textarea rows="10" cols="50" id="q{{=value.questionId}}" 
+                    onfocusout="verifyResponse({{=value.questionId}},
+                    document.querySelector('#q'+{{=value.questionId}}).value)">
+                    </textarea><br>
+                    {{?}}
+                </label>
+                <br>
+                {{~}}
+                <br>
+                <input type="button" id="form-submit" value="Submit">
             </div>
         </script>
         <script id="presenter-header-template" type="text/x-dot-template">
