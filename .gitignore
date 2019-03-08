@@ -14,6 +14,7 @@
 *.so
 
 *.code-workspace
+index.js
 
 # Packages #
 ############
