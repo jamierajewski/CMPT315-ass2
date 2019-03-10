@@ -1,5 +1,5 @@
 // CMPT 315 (Winter 2019)
-// Assignment 1
+// Assignment 2
 // Author: Jamie Rajewski
 //
 // This file implements the necessary queries and structures

@@ -1,12 +1,6 @@
 # -*- restclient -*-
 
-# Jamie Rajewski - Assignment #1 - CMPT315
-
-# TODO (for assignment 2):
-# - Add logging (I ran out of time since I figured error-handling was more important)
-
-# ---NOTE--- #
-# DELETE ALL HTTP/1.1 FROM EACH REQUEST WHEN SUBMITTING
+# Jamie Rajewski - Assignment #2 - CMPT315
 
 # IMPLEMENTED FEATURES:
 # - Extensive error-handling with additional details
@@ -28,14 +22,14 @@
 # Returns a person object containing the fields from a person
 # Required headers: Authorization
 # Optional headers: Accept (defaults to JSON if not defined)
-GET http://localhost:8080/api/v1/people/presenters/1 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presenters/1
 Authorization: Bearer LchajfPu
 Accept: application/json
 
 ###
 
 # Same as above, but tries to pull info on an invalid presenter.
-GET http://localhost:8080/api/v1/people/presenters/100 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presenters/100
 Authorization: Bearer LchajfPu
 Accept: application/json
 
@@ -43,14 +37,14 @@ Accept: application/json
 
 # Same as above, but tries to pull info on a valid presenter while
 # not using the bearer token.
-GET http://localhost:8080/api/v1/people/presenters/1 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presenters/1
 Accept: application/json
 
 ###
 
 # Same as above, but tries to pull info on a valid presenter while
 # using an invalid bearer token
-GET http://localhost:8080/api/v1/people/presenters/1 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presenters/1 
 Authorization: Bearer JamieIsCool
 Accept: application/json
 
@@ -59,7 +53,7 @@ Accept: application/json
 # Same as above, but returns a person XML object rather than JSON;
 # all requests below that return something can be configured to return either
 # JSON or XML via the Accept header
-GET http://localhost:8080/api/v1/people/presenters/1 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presenters/1 
 Authorization: Bearer LchajfPu
 Accept: application/xml
 
@@ -70,7 +64,7 @@ Accept: application/xml
 # Returns a people object containing a list of all presenters.
 # Required headers: Authorization
 # Optional headers: Accept (defaults to JSON if not defined)
-GET http://localhost:8080/api/v1/people/presenters HTTP/1.1
+GET http://localhost:8080/api/v1/people/presenters 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
@@ -81,14 +75,14 @@ Accept: application/json
 # Returns a title object containing the title.
 # Required headers: Authorization
 # Optional headers: Accept (defaults to JSON if not defined)
-GET http://localhost:8080/api/v1/people/presentationTitles/1 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presentationTitles/1 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
 ###
 
 # Same as above, but tries to pull an invalid presentation title.
-GET http://localhost:8080/api/v1/people/presentationTitles/100 HTTP/1.1
+GET http://localhost:8080/api/v1/people/presentationTitles/100 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
@@ -99,7 +93,7 @@ Accept: application/json
 # Returns a titles object containing the titles.
 # Required headers: Authorization
 # Optional headers: Accept (defaults to JSON if not defined)
-GET http://localhost:8080/api/v1/people/presentationTitles HTTP/1.1
+GET http://localhost:8080/api/v1/people/presentationTitles 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
@@ -110,14 +104,14 @@ Accept: application/json
 # Returns a question object containing the question.
 # Required headers: Authorization
 # Optional headers: Accept (defaults to JSON if not defined)
-GET http://localhost:8080/api/v1/questions/1 HTTP/1.1
+GET http://localhost:8080/api/v1/questions/1 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
 ###
 
 # Same as above, but tries to pull an invalid question.
-GET http://localhost:8080/api/v1/questions/100 HTTP/1.1
+GET http://localhost:8080/api/v1/questions/100 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
@@ -128,7 +122,7 @@ Accept: application/json
 # Returns a questions object containing the questions.
 # Required headers: Authorization
 # Optional headers: Accept (defaults to JSON if not defined)
-GET http://localhost:8080/api/v1/questions/ HTTP/1.1
+GET http://localhost:8080/api/v1/questions/ 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 
@@ -141,7 +135,7 @@ Accept: application/json
 # Required headers: Authorization, Content-Type (must be JSON)
 # Optional headers: Accept (defaults to JSON if not defined)
 # Required body parameters: presenterid, questionid, answertext
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
+POST http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Content-Type: application/json
 Accept: application/json
@@ -151,7 +145,7 @@ Accept: application/json
 ###
 
 # Same as above, but with no content-type header.
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
+POST http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Accept: application/json
 
@@ -161,7 +155,7 @@ Accept: application/json
 
 # Same as above, but using a different bearer token to signify
 # logging in as a different user and posting a response.
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
+POST http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer YvutCBLA
 Accept: application/json
 Content-Type: application/json
@@ -170,19 +164,8 @@ Content-Type: application/json
 
 ###
 
-# Same as above, but trying to post a response on behalf of yourself
-# which shouldn't be allowed.
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
-Authorization: Bearer YvutCBLA
-Accept: application/json
-Content-Type: application/json
-
-{"presenterid": 1, "questionid": 2, "answertext": "4"}
-
-###
-
 # Same as above, but posting a long-answer question
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
+POST http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Accept: application/json
 content-type: application/json
@@ -193,7 +176,7 @@ content-type: application/json
 
 # Same as above, trying to post the same response without using PUT to update
 # which shouldn't be allowed
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
+POST http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Accept: application/json
 content-type: application/json
@@ -204,7 +187,7 @@ content-type: application/json
 
 # Same as above, but trying to post a response with an invalid multiple choice
 # answer type.
-POST http://localhost:8080/api/v1/answers/ HTTP/1.1
+POST http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Accept: application/json
 Content-Type: application/json
@@ -219,7 +202,7 @@ Content-Type: application/json
 # Required headers: Authorization, Content-Type (must be JSON)
 # Optional headers: Accept (defaults to JSON if not defined)
 # Required body parameters: None
-GET http://localhost:8080/api/v1/answers/1 HTTP/1.1
+GET http://localhost:8080/api/v1/answers/3 
 Authorization: Bearer LchajfPu
 Content-Type: application/json
 Accept: application/json
@@ -233,7 +216,7 @@ Accept: application/json
 # Required headers: Authorization, Content-Type (must be JSON)
 # Optional headers: Accept (defaults to JSON if not defined)
 # Required body parameters: presenterid, questionid, answertext
-PUT http://localhost:8080/api/v1/answers/ HTTP/1.1
+PUT http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Content-Type: application/json
 Accept: application/json
@@ -243,43 +226,12 @@ Accept: application/json
 ###
 
 # Same as above but trying an invalid MC response
-PUT http://localhost:8080/api/v1/answers/ HTTP/1.1
+PUT http://localhost:8080/api/v1/answers/ 
 Authorization: Bearer LchajfPu
 Content-Type: application/json
 Accept: application/json
 
 {"presenterid": 1, "questionid": 1, "answertext": "JAMIE"}
-
-###
-
-# # Same as above, but no answertext parameter which shouldn't work.
-# PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
-# Accept: application/json
-# Authorization: Bearer LchajfPu
-# Content-Type: application/json
-
-# {"questionid": 1}
-
-# ###
-
-# # Same as above, but no questionid parameter which shouldn't work.
-# PUT http://localhost:8080/api/v1/answers/1 HTTP/1.1
-# Accept: application/json
-# Authorization: Bearer LchajfPu
-# Content-Type: application/json
-
-# {"answertext": "1"}
-
-# ###
-
-# # Same as above, but trying to update an invalid response which shouldn't
-# # be allowed.
-# PUT http://localhost:8080/api/v1/answers/100 HTTP/1.1
-# Accept: application/json
-# Authorization: Bearer LchajfPu
-# Content-Type: application/json
-
-# {"answertext": "1", "questionid": 1}
 
 ###
 
@@ -289,19 +241,19 @@ Accept: application/json
 # Required headers: Authorization
 # Optional headers: None
 # Required body parameters: None
-DELETE http://localhost:8080/api/v1/answers/2 HTTP/1.1
+DELETE http://localhost:8080/api/v1/answers/2 
 Authorization: Bearer YvutCBLA
 
 ###
 
 # Same as above, but trying to delete someone else's response which
 # shouldn't work
-DELETE http://localhost:8080/api/v1/answers/1 HTTP/1.1
+DELETE http://localhost:8080/api/v1/answers/1 
 Authorization: Bearer YvutCBLA
 
 ###
 
 # Same as above, but trying to delete a non-existant response
 # which shouldn't work
-DELETE http://localhost:8080/api/v1/answers/100 HTTP/1.1
+DELETE http://localhost:8080/api/v1/answers/100 
 Authorization: Bearer YvutCBLA

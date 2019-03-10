@@ -1,5 +1,5 @@
 // CMPT 315 (Winter 2019)
-// Assignment 1
+// Assignment 2
 // Author: Jamie Rajewski
 //
 // This file implements the backend API that communicates with
@@ -282,14 +282,6 @@ func (h *Handler) handlePostResponse(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if personId == response.PresenterId {
-		w.WriteHeader(http.StatusBadRequest)
-		encoder.Encode(ErrorMessage{Code: http.StatusBadRequest,
-			Status:  http.StatusText(http.StatusBadRequest),
-			Details: "Failed to post response; cannot review yourself."})
-		return
-	}
-
 	response.PersonId = personId
 	err = h.PostResponse(response)
 	if err != nil {
@@ -301,7 +293,6 @@ func (h *Handler) handlePostResponse(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// -----------------------------------
 func (h *Handler) handleUpdateResponse(w http.ResponseWriter, r *http.Request) {
 	encoder := r.Context().Value(keyString("Encoder")).(customEncoder)
 
@@ -360,8 +351,6 @@ func (h *Handler) handleUpdateResponse(w http.ResponseWriter, r *http.Request) {
 	}
 	encoder.Encode(result)
 }
-
-// -----------------------------------
 
 func (h *Handler) handleDeleteResponse(w http.ResponseWriter, r *http.Request) {
 	encoder := r.Context().Value(keyString("Encoder")).(customEncoder)
@@ -454,30 +443,26 @@ func (h *Handler) authenticateMw(next http.Handler) http.Handler {
 
 		authHeader := r.Header.Get("Authorization")
 		if authHeader != "" {
-			//***FIX THE LINE BELOW TO NOT GO OUT OF RANGE***//
-			// Using error handling
-			token := strings.Split(authHeader, " ")[1]
-			if len(token) > 0 {
+			token := strings.TrimPrefix(authHeader, "Bearer ")
+			if len(token) != len(authHeader) {
 				_, err := h.Authenticate(token)
 				if err != nil {
-					w.WriteHeader(http.StatusForbidden)
-					encoder.Encode(ErrorMessage{Code: http.StatusForbidden,
-						Status:  http.StatusText(http.StatusForbidden),
-						Details: "You do not have permission to view this resource"})
+					w.WriteHeader(http.StatusUnauthorized)
+					w.Header().Add("WWW-Authenticate", "Bearer realm=\"Access to survey\"")
+					encoder.Encode(ErrorMessage{Code: http.StatusUnauthorized,
+						Status:  http.StatusText(http.StatusUnauthorized),
+						Details: "This resource requires a valid bearer token"})
 					return
 				}
 				next.ServeHTTP(w, r)
 			} else {
-				w.WriteHeader(http.StatusForbidden)
-				encoder.Encode(ErrorMessage{Code: http.StatusForbidden,
-					Status:  http.StatusText(http.StatusForbidden),
-					Details: "You do not have permission to view this resource"})
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Header().Add("WWW-Authenticate", "Bearer realm=\"Access to survey\"")
+				encoder.Encode(ErrorMessage{Code: http.StatusUnauthorized,
+					Status:  http.StatusText(http.StatusUnauthorized),
+					Details: "This resource requires a valid bearer token"})
 				return
 			}
-			// 403 - it knows who you are but you dont have permission
-			// 401 - It doesnt know who you are at all
-			// token := strings.TrimPrefix(header, "Bearer ")
-			// if len(header) == len(token)	 <-- If the trimmed header is the same length, it didnt have bearer
 		} else {
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Header().Add("WWW-Authenticate", "Bearer realm=\"Access to survey\"")

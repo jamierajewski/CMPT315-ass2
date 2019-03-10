@@ -1,16 +1,4 @@
 <!-- Assignment #2 - CMPT315 - Jamie Rajewski - 3020090 -->
-<!--
-    References:
-    How to make a table cell a link
-    https://stackoverflow.com/questions/10070232/how-to-make-a-cell-of-table-hyperlink
--->
-
-<!-- #9fe2bf - sea foam -->
-<!-- #b9b9af - heather grey -->
-<!-- #b36e4b - brown -->
-<!-- #a1745d (alt brown) -->
-
-<!-- Radiogroup (look at selectedItem()) -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,9 +26,9 @@
         <script id="presenter-form-template" type="text/x-dot-template">
             <div class="presenter-form">
                 {{~it.questions :value:index}}
-                <label>
+                <div class="question-box">
                     <br>
-                    {{=value.questionText}}
+                    <strong style="text-align: center">{{=value.questionText}}</strong>
                     <br>
                     {{? value.questionType == "mc"}}
                     <input type="radio" name="q{{=value.questionId}}" 
@@ -56,26 +44,41 @@
                     <input type="radio" name="q{{=value.questionId}}" 
                     onclick=verifyResponse({{=value.questionId}},"0") value=0>N/A<br>
                     {{??}}
-                    <textarea rows="10" cols="50" id="q{{=value.questionId}}" 
+                    <textarea rows="10" cols="100" id="q{{=value.questionId}}" 
                     onfocusout="verifyResponse({{=value.questionId}},
                     document.querySelector('#q'+{{=value.questionId}}).value)">
                     </textarea><br>
                     {{?}}
-                </label>
+                </div>
                 <br>
                 {{~}}
                 <br>
-                <input type="button" id="form-submit" value="Submit">
+                <input type="button" id="form-submit" onclick="saveAndQuit()" value="Save and Close">
             </div>
         </script>
         <script id="presenter-header-template" type="text/x-dot-template">
             <hr>
             <div class="presenter-header">
                     <p>{{=it.person.firstName}}&nbsp;{{=it.person.lastName}}
-                        &nbsp;&nbsp;{{=it.person.presentationTitle.String}}
+                        &nbsp;&nbsp;"{{=it.person.presentationTitle.String}}"
                         &nbsp;&nbsp;{{=it.person.dateTime.Time}}</p>
             </div>
+            <div class="other-dropdowns"></div>
             <hr>
+        </script>
+        <script id="dropdowns-template" type="text/x-dot-template">
+            <select>
+                <option value="">--Other Presenters--</option>
+                {{~it.people :value:index}}
+                <option onclick="clickPresenter({{=value.personId}})">{{=value.firstName}} {{=value.lastName}}</option>
+                {{~}}
+            </select>
+            <select>
+                <option value="">--Other Presentations--</option>
+                {{~it.people :value:index}}
+                <option onclick="clickPresenter({{=value.personId}})">{{=value.presentationTitle.String}}</option>
+                {{~}}
+            </select>
         </script>
     </head>
     <body>
@@ -87,7 +90,8 @@
                 <br><br>
                 <input type="text" id="login-textbox" name="loginID" placeholder="Login ID">
     
-                <input type="button" id="login-submit" value="Submit">
+                <input type="button" id="login-submit" value="Submit"><br>
+                <p id="login-error-text"></p>
             </div>
         </div>
 
