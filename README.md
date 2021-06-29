@@ -1,4 +1,6 @@
-# CMPT315-ass2
+# feedback-service
+
+Final project for web development course.
 
 Full-stack single page app that allows students to provide feedback on their peers for presentations.
 
